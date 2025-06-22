@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Page | Online Examination System</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/enhanced-styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Exam Page Specific Styles */
+        .exam-container {
+            display: flex;
+            height: calc(100vh - 70px);
+            width: 100%;
+            padding: 15px;
+            gap: 20px;
+        }
+        
+        .questions-panel {
+            flex: 7;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .exam-sidebar {
+            flex: 3;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .webcam-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            padding: 15px;
+            height: 30%;
+        }
+        
+        .webcam-feed {
+            width: 100%;
+            height: calc(100% - 30px);
+            background-color: #333;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .timer-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            padding: 15px;
+            height: 30%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .timer-display {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 10px 0;
+            color: var(--primary-color);
+        }
+        
+        .date-time {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .submission-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            padding: 15px;
+            height: 40%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .file-upload {
+            margin: 15px 0;
+        }
+        
+        .file-upload-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #f5f7fa;
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        
+        .file-list {
+            margin: 10px 0;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+        
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            background-color: #f5f7fa;
+            margin-bottom: 5px;
+            border-radius: 4px;
+        }
+        
+        .submit-btn {
+            background-color: var(--success-color);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: auto;
+        }
+        
+        .submit-btn:hover {
+            background-color: #218838;
+        }
+        
+        .question {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        
+        .question h3 {
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+        
+        .options {
+            margin-left: 20px;
+        }
+        
+        .option {
+            margin-bottom: 10px;
+        }
+        
+        .option label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .option input {
+            margin-right: 10px;
+        }
+        
+        .exam-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .exam-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .exam-info {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+        }
+        
+        .warning-message {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 4px solid #ffc107;
+        }
+        
+        @media (max-width: 768px) {
+            .exam-container {
+                flex-direction: column;
+            }
+            
+            .exam-sidebar {
+                height: auto;
+            }
+            
+            .webcam-container, .timer-container, .submission-container {
+                height: auto;
+                min-height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="main-content" style="flex: 1;">
+            <div class="header">
+                <div class="header-title">
+                    <h1>Exam in Progress</h1>
+                </div>
+                <div class="user-menu">
+                    <img id="user-avatar" src="https://via.placeholder.com/40" alt="User Avatar">
+                    <span id="user-email">student@example.com</span>
+                </div>
+            </div>
+            
+            <div class="exam-container">
+                <!-- Questions Panel (Left Side) -->
+                <div class="questions-panel">
+                    <div class="exam-header">
+                        <div>
+                            <div class="exam-title" id="exam-title">Midterm Exam</div>
+                            <div class="exam-info" id="exam-course">Introduction to Computer Science</div>
+                        </div>
+                        <div class="exam-info">
+                            <div>Total Questions: <span id="total-questions">10</span></div>
+                            <div>Total Marks: <span id="total-marks">100</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="warning-message">
+                        <i class="fas fa-exclamation-triangle"></i> Your webcam is active and your screen is being monitored. Do not leave this page or open other applications.
+                    </div>
+                    
+                    <div id="questions-container">
+                        <!-- Sample Questions -->
+                        <div class="question">
+                            <h3>1. What is the primary function of an operating system?</h3>
+                            <div class="options">
+                                <div class="option">
+                                    <label>
+                                        <input type="radio" name="q1" value="a">
+                                        A) To provide a user interface
+                                    </label>
+                                </div>
+                                <div class="option">
+                                    <label>
+                                        <input type="radio" name="q1" value="b">
+                                        B) To manage hardware resources
+                                    </label>
+                                </div>
+                                <div class="option">
+                                    <label>
+                                        <input type="radio" name="q1" value="c">
+                                        C) To run application software
+                                    </label>
+                                </div>
+                                <div class="option">
+                                    <label>
+                                        <input type="radio" name="q1" value="d">
+                                        D) All of the above
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <h3>2. Which of the following is not a programming paradigm?</h3>
+                            <div class="options">
+                                <div class="option">
+                                    <label>
+                                        <input type="radio" name="q2" value="a">
+                                        A) Object-Oriented Programming
+                                    </label>
+                                </div>
+                                <div class="option">
+                                    <label>
+                                        <input type="radio" name="q2" value="b">
+                                        B) Functional Programming
+                                    </label>
+                                </div>
+                                <div class="option">
+                                    <label>
+                                        <input type="radio" name="q2" value="c">
+                                        C) Database Programming
+                                    </label>
+                                </div>
+                                <div class="option">
+                                    <label>
+                                        <input type="radio" name="q2" value="d">
+                                        D) Procedural Programming
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <h3>3. Explain the concept of recursion and provide an example.</h3>
+                            <textarea rows="6" style="width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Exam Sidebar (Right Side) -->
+                <div class="exam-sidebar">
+                    <!-- Webcam Feed -->
+                    <div class="webcam-container">
+                        <h3>Webcam Monitor</h3>
+                        <div class="webcam-feed" id="webcam-feed">
+                            <!-- Webcam will be displayed here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Timer and Date -->
+                    <div class="timer-container">
+                        <h3>Exam Timer</h3>
+                        <div class="date-time" id="current-date-time">May 15, 2023 - 10:30 AM</div>
+                        <div class="timer-display" id="timer-display">01:59:59</div>
+                        <div class="exam-info" style="text-align: center;">Time Remaining</div>
+                    </div>
+                    
+                    <!-- Submission Controls -->
+                    <div class="submission-container">
+                        <h3>Submission</h3>
+                        <div class="file-upload">
+                            <div class="file-upload-btn" onclick="document.getElementById('file-input').click()">
+                                <i class="fas fa-cloud-upload-alt"></i> Upload Files
+                            </div>
+                            <input type="file" id="file-input" style="display: none;" multiple onchange="handleFileUpload(this)">
+                            
+                            <div class="file-list" id="file-list">
+                                <!-- Uploaded files will appear here -->
+                            </div>
+                        </div>
+                        
+                        <button class="submit-btn" onclick="submitExam()">
+                            <i class="fas fa-paper-plane"></i>  Submit Exam
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/exam-page.js"></script>
+</body>
+</html>

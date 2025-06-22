@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Lecturer Account | Online Examination System</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .user-info {
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+            background-color: #f5f5f5;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-header">
+            <h1>Create Lecturer Account</h1>
+            <p>Use this form to create a new lecturer account for the Online Examination System</p>
+            <p class="user-info">Logged in as: <span id="current-user"></span></p>
+        </div>
+        
+        <form id="create-lecturer-form">
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="lecturer-first-name" placeholder="First Name" required>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="lecturer-last-name" placeholder="Last Name" required>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-id-card"></i>
+                <input type="text" id="lecturer-id" placeholder="Lecturer ID (6 digits)" required pattern="[0-9]{6}" maxlength="6">
+            </div>
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="lecturer-email" placeholder="Email" required>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-phone"></i>
+                <input type="tel" id="lecturer-phone" placeholder="Phone Number">
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="lecturer-password" placeholder="Password" required>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="lecturer-confirm-password" placeholder="Confirm Password" required>
+            </div>
+            
+            <div class="form-footer">
+                <a href="index.html" class="btn-secondary">Back to Login</a>
+                <button type="submit" class="btn-primary">Create Account</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="js/create-lecturer.js"></script>
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard | Online Examination System</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/enhanced-styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>ProctorTrack</h2>
+                <p id="user-name">Student Name</p>
+            </div>
+            <div class="sidebar-menu">
+                <a href="#" class="menu-item active" onclick="showSection('dashboard-home')">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <a href="#" class="menu-item" onclick="showSection('my-exams')">
+                    <i class="fas fa-book"></i> My Exams
+                </a>
+                <a href="#" class="menu-item" onclick="showSection('exam-schedule')">
+                    <i class="fas fa-calendar-alt"></i> Exam Schedule
+                </a>
+                <a href="#" class="menu-item" onclick="showSection('my-submissions')">
+                    <i class="fas fa-file-alt"></i> My Submissions
+                </a>
+                <a href="#" class="menu-item" onclick="showSection('profile')">
+                    <i class="fas fa-user"></i> Profile
+                </a>
+                <a href="change-password.html" class="menu-item">
+                    <i class="fas fa-key"></i> Change Password
+                </a>
+                <a href="#" class="menu-item" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="header">
+                <div class="header-title">
+                    <h1 id="section-title">Dashboard</h1>
+                </div>
+                <div class="user-menu">
+                    <img id="user-avatar" src="https://via.placeholder.com/40" alt="User Avatar">
+                    <span id="user-email">student@example.com</span>
+                </div>
+            </div>
+            
+            <div class="content">
+                <!-- Dashboard Home Section -->
+                <section id="dashboard-home" class="section active">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Welcome to Your Dashboard</h2>
+                        </div>
+                        <div class="card-body">
+                            <p>Here's your overview for today:</p>
+                            <div class="dashboard-stats">
+                                <div class="stat-card">
+                                    <h3 id="upcoming-exams-count">0</h3>
+                                    <p>Upcoming Exams</p>
+                                </div>
+                                <div class="stat-card">
+                                    <h3 id="completed-exams-count">0</h3>
+                                    <p>Completed Exams</p>
+                                </div>
+                                <div class="stat-card">
+                                    <h3 id="courses-count">0</h3>
+                                    <p>Enrolled Courses</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Upcoming Exams</h2>
+                        </div>
+                        <div class="card-body">
+                            <table id="upcoming-exams-table">
+                                <thead>
+                                    <tr>
+                                        <th>Exam Name</th>
+                                        <th>Course</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Upcoming exams will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- My Exams Section -->
+                <section id="my-exams" class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Available Exams</h2>
+                            <button onclick="refreshExams()">Refresh</button>
+                        </div>
+                        <div class="card-body">
+                            <table id="available-exams-table">
+                                <thead>
+                                    <tr>
+                                        <th>Exam Name</th>
+                                        <th>Course</th>
+                                        <th>Date</th>
+                                        <th>Duration</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Available exams will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Enrolled Courses</h2>
+                        </div>
+                        <div class="card-body">
+                            <table id="enrolled-courses-table">
+                                <thead>
+                                    <tr>
+                                        <th>Course Name</th>
+                                        <th>Instructor</th>
+                                        <th>Exams</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Enrolled courses will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Exam Schedule Section -->
+                <section id="exam-schedule" class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Exam Timetable</h2>
+                            <button onclick="printTimetable()">Print Timetable</button>
+                        </div>
+                        <div class="card-body">
+                            <div id="calendar">
+                                <!-- Calendar will be populated here -->
+                            </div>
+                            <table id="exam-schedule-table">
+                                <thead>
+                                    <tr>
+                                        <th>Exam Name</th>
+                                        <th>Course</th>
+                                        <th>Date</th>
+                                        <th>Start Time</th>
+                                        <th>End Time</th>
+                                        <th>Location</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Exam schedule will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- My Submissions Section -->
+                <section id="my-submissions" class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Exam Submissions</h2>
+                        </div>
+                        <div class="card-body">
+                            <table id="submissions-table">
+                                <thead>
+                                    <tr>
+                                        <th>Exam Name</th>
+                                        <th>Course</th>
+                                        <th>Submission Date</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Submissions will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Resubmission Requests</h2>
+                        </div>
+                        <div class="card-body">
+                            <table id="resubmission-requests-table">
+                                <thead>
+                                    <tr>
+                                        <th>Exam Name</th>
+                                        <th>Request Date</th>
+                                        <th>Reason</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Resubmission requests will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Profile Section -->
+                <section id="profile" class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>My Profile</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="profile-container">
+                                <div class="profile-header">
+                                    <div class="profile-image-container">
+                                        <img id="profile-image" src="https://via.placeholder.com/150" alt="Profile Picture" class="profile-image">
+                                        <div class="profile-image-edit" onclick="document.getElementById('profile-pic-upload').click()">
+                                            <i class="fas fa-camera"></i>
+                                        </div>
+                                        <input type="file" id="profile-pic-upload" style="display: none;" accept="image/*" onchange="updateProfilePicture(this)">
+                                    </div>
+                                    <h3 id="profile-display-name">Student Name</h3>
+                                    <div class="user-id-badge">User ID: <span id="profile-user-id">000000</span></div>
+                                </div>
+                                
+                                <div class="profile-section">
+                                    <form id="profile-form">
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="profile-first-name">First Name</label>
+                                                <input type="text" id="profile-first-name" class="form-control" placeholder="First Name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="profile-last-name">Last Name</label>
+                                                <input type="text" id="profile-last-name" class="form-control" placeholder="Last Name">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="profile-student-id">Student ID (6 digits)</label>
+                                                <input type="text" id="profile-student-id" class="form-control" placeholder="Student ID" maxlength="6" pattern="[0-9]{6}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="profile-email">Email</label>
+                                                <input type="email" id="profile-email" class="form-control" placeholder="Your Email">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="profile-phone">Phone Number</label>
+                                                <input type="tel" id="profile-phone" class="form-control" placeholder="Phone Number">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="profile-address">Address</label>
+                                                <input type="text" id="profile-address" class="form-control" placeholder="Your Address">
+                                            </div>
+                                        </div>
+                                        <button type="button" onclick="saveProfile()">Save Changes</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Change Password Section moved to change-password.html -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Exam Modal -->
+    <div id="exam-modal" class="modal-overlay" style="display: none;">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="exam-modal-title">Exam Details</h2>
+                <button class="modal-close" onclick="closeModal('exam-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="exam-details">
+                    <!-- Exam details will be populated here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeModal('exam-modal')">Close</button>
+                <button id="start-exam-btn" onclick="startExam()">Start Exam</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Resubmission Request Modal -->
+    <div id="resubmission-modal" class="modal-overlay" style="display: none;">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Request Resubmission</h2>
+                <button class="modal-close" onclick="closeModal('resubmission-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="resubmission-form">
+                    <input type="hidden" id="resubmission-exam-id">
+                    <div class="form-group">
+                        <label for="resubmission-reason">Reason for Resubmission</label>
+                        <textarea id="resubmission-reason" class="form-control" rows="4" placeholder="Please explain why you need to resubmit..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeModal('resubmission-modal')">Cancel</button>
+                <button onclick="submitResubmissionRequest()">Submit Request</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/student-dashboard.js"></script>
+    <script src="js/enhanced-dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecturer Dashboard | Online Examination System</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/enhanced-styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/integrity-reports.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>ProctorTrack</h2>
+                <p id="user-name">Lecturer Name</p>
+            </div>
+            <div class="sidebar-menu">
+                <a href="#" class="menu-item active" onclick="showSection('dashboard-home')">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <a href="#" class="menu-item" onclick="showSection('user-management')">
+                    <i class="fas fa-users"></i> User Management
+                </a>
+                <a href="#" class="menu-item" onclick="showSection('exam-management')">
+                    <i class="fas fa-book"></i> Exam Management
+                </a>
+                <a href="#" class="menu-item" onclick="showSection('enrollment-management')">
+                    <i class="fas fa-user-graduate"></i> Enrollment
+                </a>
+                <a href="#" class="menu-item" onclick="showSection('exam-schedule')">
+                    <i class="fas fa-calendar-alt"></i> Exam Schedule
+                </a>
+                <a href="#" class="menu-item" onclick="showSection('exam-control')">
+                    <i class="fas fa-shield-alt"></i> Exam Control
+                </a>
+                <a href="#" class="menu-item" onclick="showSection('plagiarism-check')">
+                    <i class="fas fa-copy"></i> Plagiarism Check
+                </a>
+                <a href="#" class="menu-item" onclick="showSection('integrity-reports')">
+                    <i class="fas fa-chart-bar"></i> Integrity Reports
+                </a>
+                <a href="#" class="menu-item" onclick="showSection('profile')">
+                    <i class="fas fa-user"></i> Profile
+                </a>
+                <a href="change-password.html" class="menu-item">
+                    <i class="fas fa-key"></i> Change Password
+                </a>
+                <a href="#" class="menu-item" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="header">
+                <div class="header-title">
+                    <h1 id="section-title">Dashboard</h1>
+                </div>
+                <div class="user-menu">
+                    <img id="user-avatar" src="https://via.placeholder.com/40" alt="User Avatar">
+                    <span id="user-email">lecturer@example.com</span>
+                </div>
+            </div>
+            
+            <div class="content">
+                <!-- Dashboard Home Section -->
+                <section id="dashboard-home" class="section active">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Welcome to Your Dashboard</h2>
+                        </div>
+                        <div class="card-body">
+                            <p>Here's your overview for today:</p>
+                            <div class="dashboard-stats">
+                                <div class="stat-card">
+                                    <h3 id="students-count">0</h3>
+                                    <p>Students</p>
+                                </div>
+                                <div class="stat-card">
+                                    <h3 id="exams-count">0</h3>
+                                    <p>Exams</p>
+                                </div>
+                                <div class="stat-card">
+                                    <h3 id="courses-count">0</h3>
+                                    <p>Courses</p>
+                                </div>
+                                <div class="stat-card">
+                                    <h3 id="submissions-count">0</h3>
+                                    <p>Submissions</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Recent Activities</h2>
+                        </div>
+                        <div class="card-body">
+                            <ul id="recent-activities" class="activity-list">
+                                <!-- Activities will be populated here -->
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Upcoming Exams</h2>
+                        </div>
+                        <div class="card-body">
+                            <table id="upcoming-exams-table">
+                                <thead>
+                                    <tr>
+                                        <th>Exam Name</th>
+                                        <th>Course</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Students</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Upcoming exams will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- User Management Section -->
+                <section id="user-management" class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>User Management</h2>
+                            <div class="button-group">
+                                <button onclick="showModal('add-user-modal')">Add User</button>
+                                <!--<a href="create-lecturer.html" class="btn-primary">Create Lecturer Account</a>-->
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="filter-controls">
+                                <input type="text" id="user-search" placeholder="Search users..." onkeyup="filterUsers()">
+                                <select id="user-type-filter" onchange="filterUsers()">
+                                    <option value="all">All Users</option>
+                                    <option value="student">Students</option>
+                                    <option value="lecturer">Lecturers</option>
+                                </select>
+                            </div>
+                            <table id="users-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>User Type</th>
+                                        <th>Created</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Users will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Exam Management Section -->
+                <section id="exam-management" class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Exam Management</h2>
+                            <button onclick="showModal('add-exam-modal')">Create Exam</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="filter-controls">
+                                <input type="text" id="exam-search" placeholder="Search exams..." onkeyup="filterExams()">
+                                <select id="exam-status-filter" onchange="filterExams()">
+                                    <option value="all">All Exams</option>
+                                    <option value="upcoming">Upcoming</option>
+                                    <option value="ongoing">Ongoing</option>
+                                    <option value="completed">Completed</option>
+                                </select>
+                            </div>
+                            <table id="exams-table">
+                                <thead>
+                                    <tr>
+                                        <th>Exam Name</th>
+                                        <th>Course</th>
+                                        <th>Date</th>
+                                        <th>Duration</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Exams will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Enrollment Management Section -->
+                <section id="enrollment-management" class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Course Enrollment</h2>
+                            <button onclick="showModal('add-enrollment-modal')">Add Enrollment</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="filter-controls">
+                                <select id="course-filter" onchange="filterEnrollments()">
+                                    <option value="all">All Courses</option>
+                                    <!-- Courses will be populated here -->
+                                </select>
+                            </div>
+                            <table id="enrollments-table">
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Email</th>
+                                        <th>Course</th>
+                                        <th>Enrolled Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Enrollments will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Assessment Enrollment</h2>
+                            <div>
+                                <button onclick="generateEnrollmentReport()">Generate Report</button>
+                                <button onclick="printEnrollmentReport()">Print Report</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="filter-controls">
+                                <select id="assessment-filter" onchange="filterAssessmentEnrollments()">
+                                    <option value="all">All Assessments</option>
+                                    <!-- Assessments will be populated here -->
+                                </select>
+                            </div>
+                            <table id="assessment-enrollments-table">
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Email</th>
+                                        <th>Assessment</th>
+                                        <th>Course</th>
+                                        <th>Enrolled Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Assessment enrollments will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Exam Schedule Section -->
+                <section id="exam-schedule" class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Exam Schedule</h2>
+                            <button onclick="showModal('add-schedule-modal')">Add Schedule</button>
+                        </div>
+                        <div class="card-body">
+                            <div id="calendar">
+                                <!-- Calendar will be populated here -->
+                            </div>
+                            <table id="schedule-table">
+                                <thead>
+                                    <tr>
+                                        <th>Exam Name</th>
+                                        <th>Course</th>
+                                        <th>Date</th>
+                                        <th>Start Time</th>
+                                        <th>End Time</th>
+                                        <th>Location</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Schedule will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Exam Control Section -->
+                <section id="exam-control" class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Keyboard Shortcuts Control</h2>
+                            <button onclick="showModal('add-shortcut-modal')">Add Shortcut</button>
+                        </div>
+                        <div class="card-body">
+                            <table id="shortcuts-table">
+                                <thead>
+                                    <tr>
+                                        <th>Shortcut</th>
+                                        <th>Description</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Shortcuts will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Application Control</h2>
+                            <button onclick="showModal('add-app-control-modal')">Add Application</button>
+                        </div>
+                        <div class="card-body">
+                            <table id="app-control-table">
+                                <thead>
+                                    <tr>
+                                        <th>Application</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- App controls will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Head Movement Detection</h2>
+                        </div>
+                        <div class="card-body">
+                            <form id="head-movement-form">
+                                <div class="form-group">
+                                    <label for="movement-threshold">Movement Threshold (degrees)</label>
+                                    <input type="range" id="movement-threshold" min="5" max="45" value="15" class="form-control" oninput="updateThresholdValue(this.value)">
+                                    <span id="threshold-value">15°</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="detection-sensitivity">Detection Sensitivity</label>
+                                    <select id="detection-sensitivity" class="form-control">
+                                        <option value="low">Low</option>
+                                        <option value="medium" selected>Medium</option>
+                                        <option value="high">High</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="warning-count">Warning Count Before Flagging</label>
+                                    <input type="number" id="warning-count" min="1" max="10" value="3" class="form-control">
+                                </div>
+                                <button type="button" onclick="saveHeadMovementSettings()">Save Settings</button>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Plagiarism Check Section -->
+                <section id="plagiarism-check" class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Plagiarism Check</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="filter-controls">
+                                <select id="plagiarism-course-filter" onchange="filterPlagiarismSubmissions()">
+                                    <option value="all">All Courses</option>
+                                    <!-- Courses will be populated here -->
+                                </select>
+                                <select id="plagiarism-exam-filter" onchange="filterPlagiarismSubmissions()">
+                                    <option value="all">All Exams</option>
+                                    <!-- Exams will be populated here -->
+                                </select>
+                            </div>
+                            <table id="plagiarism-submissions-table">
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Exam</th>
+                                        <th>Course</th>
+                                        <th>Submission Date</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Submissions will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Plagiarism Reports</h2>
+                        </div>
+                        <div class="card-body">
+                            <table id="plagiarism-table">
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Exam</th>
+                                        <th>Submission Date</th>
+                                        <th>Similarity Score</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Plagiarism reports will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Resubmission Requests</h2>
+                        </div>
+                        <div class="card-body">
+                            <table id="resubmission-requests-table">
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Exam</th>
+                                        <th>Request Date</th>
+                                        <th>Reason</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Resubmission requests will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Integrity Reports Section -->
+                <section id="integrity-reports" class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Integrity Reports</h2>
+                            <div class="report-actions">
+                                <button onclick="generateIntegrityReport()"><i class="fas fa-file-export"></i> Export Report</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="filter-controls">
+                                <select id="integrity-course-filter" onchange="filterIntegrityReports()">
+                                    <option value="all">All Courses</option>
+                                    <!-- Courses will be populated here -->
+                                </select>
+                                <select id="integrity-exam-filter" onchange="filterIntegrityReports()">
+                                    <option value="all">All Exams</option>
+                                    <!-- Exams will be populated here -->
+                                </select>
+                                <div class="date-range-filter">
+                                    <input type="date" id="integrity-date-from" onchange="filterIntegrityReports()">
+                                    <span>to</span>
+                                    <input type="date" id="integrity-date-to" onchange="filterIntegrityReports()">
+                                </div>
+                            </div>
+                            
+                            <!-- Report Type Tabs -->
+                            <div class="report-tabs">
+                                <div class="tabs">
+                                    <button class="tab-btn active" onclick="showReportTab('exam-evidence')">Exam Evidence</button>
+                                    <button class="tab-btn" onclick="showReportTab('student-behavior')">Student Behavior</button>
+                                    <button class="tab-btn" onclick="showReportTab('violation-analysis')">Violation Analysis</button>
+                                </div>
+                                
+                                <!-- Exam Evidence Report Tab -->
+                                <div id="exam-evidence" class="report-tab-content active">
+                                    <div class="report-description">
+                                        <p>Review exam evidence including video recordings and screenshots of flagged incidents.</p>
+                                    </div>
+                                    <table id="evidence-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Student</th>
+                                                <th>Exam</th>
+                                                <th>Date</th>
+                                                <th>Incident Type</th>
+                                                <th>Evidence</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Evidence reports will be populated here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <!-- Student Behavior Report Tab -->
+                                <div id="student-behavior" class="report-tab-content">
+                                    <div class="report-description">
+                                        <p>View detailed behavior reports for individual students, including flagged incident counts and patterns.</p>
+                                    </div>
+                                    <table id="behavior-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Student</th>
+                                                <th>Total Exams</th>
+                                                <th>Head Movement</th>
+                                                <th>App Switching</th>
+                                                <th>Total Flags</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Behavior reports will be populated here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <!-- Violation Analysis Report Tab -->
+                                <div id="violation-analysis" class="report-tab-content">
+                                    <div class="report-description">
+                                        <p>Analyze violation patterns across exams, courses, and time periods.</p>
+                                    </div>
+                                    <div class="analysis-charts">
+                                        <div class="chart-container">
+                                            <h3>Violation Types Distribution</h3>
+                                            <div class="chart-placeholder" id="violation-types-chart">
+                                                <div class="chart-bars">
+                                                    <div class="chart-bar" style="height: 70%;">
+                                                        <span class="bar-label">Head Movement</span>
+                                                        <span class="bar-value">42</span>
+                                                    </div>
+                                                    <div class="chart-bar" style="height: 50%;">
+                                                        <span class="bar-label">App Switch</span>
+                                                        <span class="bar-value">30</span>
+                                                    </div>
+                                                    
+                                                    <div class="chart-bar" style="height: 20%;">
+                                                        <span class="bar-label">Keyboard</span>
+                                                        <span class="bar-value">12</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="chart-container">
+                                            <h3>Violations by Exam</h3>
+                                            <div class="chart-placeholder" id="violations-by-exam-chart">
+                                                <div class="chart-bars horizontal">
+                                                    <div class="chart-bar" style="width: 80%;">
+                                                        <span class="bar-label">Quiz 1</span>
+                                                        <span class="bar-value">48</span>
+                                                    </div>
+                                                    <div class="chart-bar" style="width: 60%;">
+                                                        <span class="bar-label">Midterm</span>
+                                                        <span class="bar-value">36</span>
+                                                    </div>
+                                                    <div class="chart-bar" style="width: 40%;">
+                                                        <span class="bar-label">Final</span>
+                                                        <span class="bar-value">24</span>
+                                                    </div>
+                                                    <div class="chart-bar" style="width: 25%;">
+                                                        <span class="bar-label">Practice</span>
+                                                        <span class="bar-value">15</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="analysis-summary">
+                                        <h3>Summary Findings</h3>
+                                        <ul>
+                                            <li>Head movement violations are most common (42 incidents)</li>
+                                            <li>Quiz 1 had the highest violation rate (48 incidents)</li>
+                                            <li>Violations decreased by 25% in final exams compared to midterms</li>
+                                            <li>Morning exams show 15% fewer violations than afternoon exams</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Profile Section -->
+                <section id="profile" class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>My Profile</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="profile-container">
+                                <div class="profile-header">
+                                    <div class="profile-image-container">
+                                        <img id="profile-image" src="https://via.placeholder.com/150" alt="Profile Picture" class="profile-image">
+                                        <div class="profile-image-edit" onclick="document.getElementById('profile-pic-upload').click()">
+                                            <i class="fas fa-camera"></i>
+                                        </div>
+                                        <input type="file" id="profile-pic-upload" style="display: none;" accept="image/*" onchange="updateProfilePicture(this)">
+                                    </div>
+                                    <h3 id="profile-display-name">Quah Jun Hong</h3>
+                                    <div class="user-id-badge">User ID: <span id="profile-user-id">000001</span></div>
+                                </div>
+                                
+                                <div class="profile-section">
+                                    <form id="profile-form" class="profile-form">
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="profile-first-name">First Name:</label>
+                                                <input type="text" id="profile-first-name" class="form-control" placeholder="Jun Hong">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="profile-last-name">Last Name:</label>
+                                                <input type="text" id="profile-last-name" class="form-control" placeholder="Quah">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="profile-email">Email:</label>
+                                                <input type="email" id="profile-email" class="form-control" placeholder="quahjun21@student.tarc.edu.my">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="profile-address">Address:</label>
+                                                <input type="text" id="profile-address" class="form-control" placeholder="jalan1 and and">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="profile-phone">Phone Number:</label>
+                                                <input type="tel" id="profile-phone" class="form-control" placeholder="0123456412">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="profile-dob">Date of Birth:</label>
+                                                <input type="date" id="profile-dob" class="form-control" placeholder="2022-07-22">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="profile-gender">Gender:</label>
+                                                <select id="profile-gender" class="form-control">
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-actions">
+                                            <button type="button" class="btn-secondary" onclick="window.history.back()">Back</button>
+                                            <button type="button" class="btn-primary" onclick="saveProfile()">Save Changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Change password section moved to change-password.html -->
+                </section>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add User Modal -->
+    <div id="add-user-modal" class="modal-overlay" style="display: none;">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Add User</h2>
+                <button class="modal-close" onclick="closeModal('add-user-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-user-form">
+                    <div class="form-group">
+                        <label for="user-name">Full Name</label>
+                        <input type="text" id="user-name" class="form-control" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="user-email">Email</label>
+                        <input type="email" id="user-email" class="form-control" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="user-password">Password</label>
+                        <input type="password" id="user-password" class="form-control" placeholder="Password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="user-type">User Type</label>
+                        <select id="user-type" class="form-control" required>
+                            <option value="student">Student</option>
+                            <option value="lecturer">Lecturer</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeModal('add-user-modal')">Cancel</button>
+                <button onclick="addUser()">Add User</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Edit User Modal -->
+    <div id="edit-user-modal" class="modal-overlay" style="display: none;">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Edit User</h2>
+                <button class="modal-close" onclick="closeModal('edit-user-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-user-form">
+                    <input type="hidden" id="edit-user-id">
+                    <div class="form-group">
+                        <label for="edit-user-name">Full Name</label>
+                        <input type="text" id="edit-user-name" class="form-control" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-user-email">Email</label>
+                        <input type="email" id="edit-user-email" class="form-control" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-user-type">User Type</label>
+                        <select id="edit-user-type" class="form-control" required>
+                            <option value="student">Student</option>
+                            <option value="lecturer">Lecturer</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeModal('edit-user-modal')">Cancel</button>
+                <button onclick="updateUser()">Update User</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Exam Modal -->
+    <div id="add-exam-modal" class="modal-overlay" style="display: none;">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Create Exam</h2>
+                <button class="modal-close" onclick="closeModal('add-exam-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-exam-form">
+                    <div class="form-group">
+                        <label for="exam-name">Exam Name</label>
+                        <input type="text" id="exam-name" class="form-control" placeholder="Exam Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exam-course">Course</label>
+                        <select id="exam-course" class="form-control" required>
+                            <!-- Courses will be populated here -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exam-date">Date</label>
+                        <input type="date" id="exam-date" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exam-start-time">Start Time</label>
+                        <input type="time" id="exam-start-time" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exam-duration">Duration (minutes)</label>
+                        <input type="number" id="exam-duration" class="form-control" min="15" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exam-location">Location</label>
+                        <input type="text" id="exam-location" class="form-control" placeholder="Location" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeModal('add-exam-modal')">Cancel</button>
+                <button onclick="addExam()">Create Exam</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Enrollment Modal -->
+    <div id="add-enrollment-modal" class="modal-overlay" style="display: none;">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Add Enrollment</h2>
+                <button class="modal-close" onclick="closeModal('add-enrollment-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-enrollment-form">
+                    <div class="form-group">
+                        <label for="enrollment-student">Student</label>
+                        <select id="enrollment-student" class="form-control" required>
+                            <!-- Students will be populated here -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="enrollment-course">Course</label>
+                        <select id="enrollment-course" class="form-control" required>
+                            <!-- Courses will be populated here -->
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeModal('add-enrollment-modal')">Cancel</button>
+                <button onclick="addEnrollment()">Add Enrollment</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Schedule Modal -->
+    <div id="add-schedule-modal" class="modal-overlay" style="display: none;">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Add Schedule</h2>
+                <button class="modal-close" onclick="closeModal('add-schedule-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-schedule-form">
+                    <div class="form-group">
+                        <label for="schedule-exam">Exam</label>
+                        <select id="schedule-exam" class="form-control" required>
+                            <!-- Exams will be populated here -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="schedule-date">Date</label>
+                        <input type="date" id="schedule-date" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="schedule-start-time">Start Time</label>
+                        <input type="time" id="schedule-start-time" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="schedule-end-time">End Time</label>
+                        <input type="time" id="schedule-end-time" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="schedule-location">Location</label>
+                        <input type="text" id="schedule-location" class="form-control" placeholder="Location" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeModal('add-schedule-modal')">Cancel</button>
+                <button onclick="addSchedule()">Add Schedule</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Shortcut Modal -->
+    <div id="add-shortcut-modal" class="modal-overlay" style="display: none;">
+        <div class="modal">
+    <!-- JavaScript Files -->
+    <script src="js/auth.js"></script>
+    <script src="js/profile.js"></script>
+    <script src="js/lecturer-dashboard.js"></script>
+    <script src="js/enhanced-dashboard.js"></script>
+    
+    <!-- Evidence Modal (will be populated dynamically) -->
+    <div id="evidence-modal" class="evidence-modal">
+        <div class="evidence-modal-content">
+            <button class="evidence-modal-close" onclick="closeEvidenceModal()">&times;</button>
+            <h2>Integrity Violation Evidence</h2>
+            <div class="evidence-media" id="evidence-media-container"></div>
+            <div class="evidence-details">
+                <h3>Incident Details</h3>
+                <dl>
+                    <dt>Student:</dt>
+                    <dd id="evidence-student"></dd>
+                    
+                    <dt>Exam:</dt>
+                    <dd id="evidence-exam"></dd>
+                    
+                    <dt>Date/Time:</dt>
+                    <dd id="evidence-datetime"></dd>
+                    
+                    <dt>Incident:</dt>
+                    <dd id="evidence-incident"></dd>
+                    
+                    <dt>Duration:</dt>
+                    <dd id="evidence-duration"></dd>
+                    
+                    <dt>Severity:</dt>
+                    <dd id="evidence-severity"></dd>
+                    
+                    <dt>Description:</dt>
+                    <dd id="evidence-description"></dd>
+                    
+                    <dt>Action Taken:</dt>
+                    <dd id="evidence-action"></dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Examination System</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/register-steps.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="login-page-container">
+        <div class="login-left-panel">
+            <div class="form-container">
+            <h1>Online Examination System</h1>
+            <p class="login-subtitle">Welcome! Students and Lecturers use the same login system.</p>
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showTab('login')">Login</button>
+                <button class="tab-btn" onclick="showTab('register')">Register</button>
+            </div>
+            
+            <div id="login" class="tab-content active">
+                <form id="login-form" onsubmit="login(); return false;">
+                    <div class="input-group">
+                        <i class="fas fa-id-card"></i>
+                        <input type="text" id="login-user-id" placeholder="User ID" required pattern="[0-9]{6}" maxlength="6">
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="login-password" placeholder="Password" required>
+                    </div>
+                    <div class="user-type-info">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Both students and lecturers can login here</span>
+                    </div>
+                    <div class="form-footer">
+                        <button type="submit">Login</button>
+                        <a href="#" onclick="showForgotPassword(); return false;">Forgot Password?</a>
+                    </div>
+                </form>
+            </div>
+            
+            <div id="register" class="tab-content">
+                <form id="register-form" onsubmit="register(); return false;">
+                    <!-- Progress Bar -->
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-bar-fill" id="progress-fill"></div>
+                            <div class="progress-step active" data-step="1">
+                                <div class="step-circle">1</div>
+                                <div class="step-label">Account</div>
+                            </div>
+                            <div class="progress-step" data-step="2">
+                                <div class="step-circle">2</div>
+                                <div class="step-label">Personal</div>
+                            </div>
+                            <div class="progress-step" data-step="3">
+                                <div class="step-circle">3</div>
+                                <div class="step-label">Verification</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 1: Account Information -->
+                    <div class="form-step active" id="step-1">
+                        <div class="input-group">
+                            <i class="fas fa-id-card"></i>
+                            <input type="text" id="register-student-id" placeholder="Student ID (6 digits)" required pattern="[0-9]{6}" maxlength="6">
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="register-email" placeholder="Email" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="register-password" placeholder="Password" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="register-confirm-password" placeholder="Confirm Password" required>
+                        </div>
+                        <div class="step-buttons">
+                            <div></div> <!-- Empty div for spacing -->
+                            <button type="button" class="btn-next" onclick="nextStep(1)">Next</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2: Personal Information -->
+                    <div class="form-step" id="step-2">
+                        <div class="input-group">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="register-first-name" placeholder="First Name" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="register-last-name" placeholder="Last Name" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" id="register-phone" placeholder="Phone Number">
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-user-tag"></i>
+                            <select id="user-type">
+                                <option value="student">Student</option>
+                            </select>
+                        </div>
+                        <div class="step-buttons">
+                            <button type="button" class="btn-prev" onclick="prevStep(2)">Previous</button>
+                            <button type="button" class="btn-next" onclick="nextStep(2)">Next</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3: Verification -->
+                    <div class="form-step" id="step-3">
+                        <div class="input-group">
+                            <i class="fas fa-check-circle"></i>
+                            <p style="padding: 12px; color: #666;">Please review your information before submitting:</p>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-info-circle"></i>
+                            <p style="padding: 12px; color: #666;">By clicking Submit, you agree to our Terms of Service and Privacy Policy.</p>
+                        </div>
+                        <div class="step-buttons">
+                            <button type="button" class="btn-prev" onclick="prevStep(3)">Previous</button>
+                            <button type="submit" class="btn-submit">Submit</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Registration Complete Message -->
+                    <div class="registration-complete" id="registration-complete">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>Registration Complete!</h3>
+                        <p>Your account has been created successfully.</p>
+                        <button type="button" class="btn-primary" onclick="showTab('login')">Proceed to Login</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div id="forgot-password" class="tab-content">
+                <form id="forgot-password-form" onsubmit="requestOTP(); return false;">
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="forgot-email" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-footer">
+                        <button type="submit">Request OTP</button>
+                        <a href="#" onclick="showTab('login'); return false;">Back to Login</a>
+                    </div>
+                </form>
+            </div>
+            
+            <div id="verify-otp" class="tab-content">
+                <form id="verify-otp-form" onsubmit="verifyOTP(); return false;">
+                    <div class="input-group">
+                        <i class="fas fa-key"></i>
+                        <input type="text" id="otp-code" placeholder="Enter OTP Code" required pattern="[0-9]{6}" maxlength="6">
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="new-password" placeholder="New Password" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="confirm-new-password" placeholder="Confirm New Password" required>
+                    </div>
+                    <div class="form-footer">
+                        <button type="submit">Reset Password</button>
+                        <a href="#" onclick="showTab('forgot-password'); return false;">Back</a>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+        <div class="login-right-panel">
+            <img src="images/login-illustration.svg" alt="Online Examination System" class="login-illustration">
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>
